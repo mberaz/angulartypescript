@@ -1,0 +1,19 @@
+﻿npm run tsc
+
+
+
+Editing Our Hero
+
+
+  this.http.post('http://localhost:62788/Heroes/Users', JSON.stringify(data),
+            {
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                })
+            })
+            .map(res => res.json())
+            .subscribe(
+            data  => this.loadData(data),
+            err => console.log(err),
+            () => { }
+            );

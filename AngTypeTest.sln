@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngTypeTest", "AngTypeTest\AngTypeTest.csproj", "{9967C9E0-9F5E-4F6D-BCDC-C77893CD21BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{FF6B0A25-BD0C-438B-8C46-934B3B1AA84A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9967C9E0-9F5E-4F6D-BCDC-C77893CD21BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9967C9E0-9F5E-4F6D-BCDC-C77893CD21BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9967C9E0-9F5E-4F6D-BCDC-C77893CD21BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9967C9E0-9F5E-4F6D-BCDC-C77893CD21BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF6B0A25-BD0C-438B-8C46-934B3B1AA84A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF6B0A25-BD0C-438B-8C46-934B3B1AA84A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF6B0A25-BD0C-438B-8C46-934B3B1AA84A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF6B0A25-BD0C-438B-8C46-934B3B1AA84A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

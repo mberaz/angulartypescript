@@ -50,6 +50,11 @@ class AppComponent
         } 
     }
 
+    onChange(hero: Hero)
+    {
+        alert(hero.name);
+    };
+
     onSelect(hero: Hero)
     {
         this.selectedHero = hero;

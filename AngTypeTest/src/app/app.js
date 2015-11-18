@@ -26,6 +26,10 @@ var AppComponent = (function () {
             this.heroes.push({ "id": list[i].id, "name": list[i].name });
         }
     };
+    AppComponent.prototype.onChange = function (hero) {
+        alert(hero.name);
+    };
+    ;
     AppComponent.prototype.onSelect = function (hero) {
         this.selectedHero = hero;
     };

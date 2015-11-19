@@ -1,13 +1,15 @@
 ﻿<h1>{{title}}</h1>
 <h2>My Heroes</h2>
+
+<label class="label label-info" >{{selectedHeroescCount}}</label>
+
 <ul class="heroes">
 
     <li *ng-for="#hero of heroes; #i=index" (click)="onSelect(hero)" [ng-class]="getSelectedClass(hero)">
         <input type="checkbox" (change)="onChange(hero)" id="id-{{i}}"/>
+        <!--<input type="checkbox" [(ng-model)]="hero.selected" id="id-{{i}}"/>-->
         <span class="badge">{{hero.id}}</span> {{hero.name}}
-
     </li>
-
 </ul>
 
 <div *ng-if="selectedHero">
@@ -16,7 +18,6 @@
     <div>
         <label>name: </label>
         <input [(ng-model)]="selectedHero.name" placeholder="name"></input>
-
     </div>
 
 </div>

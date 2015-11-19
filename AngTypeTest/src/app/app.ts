@@ -1,6 +1,22 @@
-﻿import { bootstrap, Component, FORM_DIRECTIVES, CORE_DIRECTIVES} from 'angular2/angular2';
+﻿import { bootstrap, Component, FORM_DIRECTIVES, CORE_DIRECTIVES, Pipe, PipeTransform} from 'angular2/angular2';
 import {Http, Headers, HTTP_BINDINGS} from 'angular2/http';
 
+
+@Pipe({
+    name: 'countSelected'
+})
+// The work of the pipe is handled in the tranform method with our pipe's class
+class countSelectedPipe implements PipeTransform {
+  transform(value: Array<Hero> , args: any[]) {
+    
+      var arr = value.filter(function (x)
+      {
+          return x[args[0]] == args[1]
+      });
+      return arr.length;
+    
+  }
+}
 @Component({
     selector: 'my-app',
     templateUrl:'/src/views/heroView.html',
@@ -21,7 +37,7 @@ import {Http, Headers, HTTP_BINDINGS} from 'angular2/http';
   }
   .selected { background-color: #EEE; color: #369; }
   `],
-   
+    pipes: [countSelectedPipe]
 })
 
 class AppComponent
@@ -29,7 +45,8 @@ class AppComponent
     public title = 'Tour of Heroes';
     public selectedHero: Hero;
     public heroes = [];
-    public http: any
+    public selectedHeroescCount:number=0;
+    public http: any;
     constructor(http:Http )
     {
         this.http = http;
@@ -46,13 +63,18 @@ class AppComponent
     {
         for (var i = 0; i < list.length; i++)
         {
-            this.heroes.push({ "id": list[i].id, "name": list[i].name } );
+            this.heroes.push({ id: list[i].id, name: list[i].name, selected:false } );
         } 
     }
 
     onChange(hero: Hero)
     {
-        alert(hero.name);
+       hero.selected=!hero.selected;
+       this.selectedHeroescCount=this.heroes.filter(function (x)
+      {
+          return x.selected;
+      }).length;
+       
     };
 
     onSelect(hero: Hero)
@@ -65,4 +87,6 @@ class AppComponent
         return { 'selected': hero === this.selectedHero };
     };
 }
+
+
 bootstrap(AppComponent, [HTTP_BINDINGS]);

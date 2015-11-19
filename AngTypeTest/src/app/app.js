@@ -11,31 +11,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var angular2_1 = require('angular2/angular2');
 var http_1 = require('angular2/http');
-var countSelectedPipe = (function () {
-    function countSelectedPipe() {
-    }
-    countSelectedPipe.prototype.transform = function (value, args) {
-        var arr = value.filter(function (x) {
-            return x[args[0]] == args[1];
-        });
-        return arr.length;
-    };
-    countSelectedPipe = __decorate([
-        angular2_1.Pipe({
-            name: 'countSelected'
-        }), 
-        __metadata('design:paramtypes', [])
-    ], countSelectedPipe);
-    return countSelectedPipe;
-})();
 var AppComponent = (function () {
     function AppComponent(http) {
         var _this = this;
         this.title = 'Tour of Heroes';
         this.heroes = [];
         this.selectedHeroescCount = 0;
+        var config = new Config();
         this.http = http;
-        this.http.get('http://localhost:62788/API/Heroes')
+        this.http.get(config.apiBaseUrl + 'Heroes')
             .map(function (res) { return res.json(); })
             .subscribe(function (data) { return _this.loadHeroesData(data); }, function (err) { return console.log(err); }, function () { });
     }
@@ -46,9 +30,7 @@ var AppComponent = (function () {
     };
     AppComponent.prototype.onChange = function (hero) {
         hero.selected = !hero.selected;
-        this.selectedHeroescCount = this.heroes.filter(function (x) {
-            return x.selected;
-        }).length;
+        this.selectedHeroescCount = this.heroes.filter(function (x) { return x.selected; }).length;
     };
     ;
     AppComponent.prototype.onSelect = function (hero) {
@@ -64,8 +46,7 @@ var AppComponent = (function () {
             selector: 'my-app',
             templateUrl: '/src/views/heroView.html',
             directives: [angular2_1.FORM_DIRECTIVES, angular2_1.CORE_DIRECTIVES],
-            styles: ["\n  .heroes {list-style-type: none; margin-left: 1em; padding: 0; width: 10em;}\n  .heroes li { cursor: pointer; position: relative; left: 0; transition: all 0.2s ease; }\n  .heroes li:hover {color: #369; background-color: #EEE; left: .2em;}\n  .heroes .badge {\n    font-size: small;\n    color: white;\n    padding: 0.1em 0.7em;\n    background-color: #369;\n    line-height: 1em;\n    position: relative;\n    left: -1px;\n    top: -1px;\n  }\n  .selected { background-color: #EEE; color: #369; }\n  "],
-            pipes: [countSelectedPipe]
+            styles: ["\n  \n  "],
         }), 
         __metadata('design:paramtypes', [http_1.Http])
     ], AppComponent);

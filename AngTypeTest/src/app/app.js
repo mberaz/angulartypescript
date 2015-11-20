@@ -17,9 +17,9 @@ var AppComponent = (function () {
         this.title = 'Tour of Heroes';
         this.heroes = [];
         this.selectedHeroescCount = 0;
-        var config = new Config();
+        this.config = new Config();
         this.http = http;
-        this.http.get(config.apiBaseUrl + 'Heroes')
+        this.http.get(this.config.apiBaseUrl + 'Heroes')
             .map(function (res) { return res.json(); })
             .subscribe(function (data) { return _this.loadHeroesData(data); }, function (err) { return console.log(err); }, function () { });
     }
@@ -29,10 +29,17 @@ var AppComponent = (function () {
         }
     };
     AppComponent.prototype.onChange = function (hero) {
+        var _this = this;
         hero.selected = !hero.selected;
         this.selectedHeroescCount = this.heroes.filter(function (x) { return x.selected; }).length;
+        this.http.get(this.config.apiBaseUrl + 'Heroes/' + hero.id)
+            .map(function (res) { return res.json(); })
+            .subscribe(function (data) { return _this.showHero(data); }, function (err) { return console.log(err); }, function () { });
     };
     ;
+    AppComponent.prototype.showHero = function (res) {
+        alert("Hero from server: " + res.name);
+    };
     AppComponent.prototype.onSelect = function (hero) {
         this.selectedHero = hero;
     };
@@ -46,7 +53,7 @@ var AppComponent = (function () {
             selector: 'my-app',
             templateUrl: '/src/views/heroView.html',
             directives: [angular2_1.FORM_DIRECTIVES, angular2_1.CORE_DIRECTIVES],
-            styles: ["\n  \n  "],
+            styles: ["\n\n  "],
         }), 
         __metadata('design:paramtypes', [http_1.Http])
     ], AppComponent);

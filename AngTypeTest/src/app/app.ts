@@ -1,10 +1,12 @@
 ﻿import { bootstrap, Component, FORM_DIRECTIVES, CORE_DIRECTIVES} from "angular2/angular2";
 import {Http, HTTP_BINDINGS} from "angular2/http";
+import {StringReverse} from "./pipes/stringReverse";
 
 @Component({
     selector: "my-app",
     templateUrl: "/src/views/heroView.html",
     directives: [FORM_DIRECTIVES, CORE_DIRECTIVES],
+    pipes: [StringReverse]
 })
 
 class AppComponent {
@@ -28,7 +30,7 @@ class AppComponent {
 
     loadHeroesData(list: any) {
         for (var i = 0; i < list.length; i++) {
-            this.heroes.push({ id: list[i].id, name: list[i].name, selected: i%2==0 });
+            this.heroes.push({ id: list[i].id, name: list[i].name, selected:false });
         }
     }
 

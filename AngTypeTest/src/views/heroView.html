@@ -55,7 +55,9 @@
         <label>id: </label>{{selectedHero.id}}</div>
     <div>
         <label>name: </label>
-        <input [(ng-model)]="selectedHero.name" placeholder="name"></input>
+
+        <span>{{selectedHero.name|stringReverse }}</span>
+        <input [(ng-model)]="selectedHero.name" placeholder="name"/>
     </div>
 
 </div>

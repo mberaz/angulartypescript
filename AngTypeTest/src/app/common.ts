@@ -1,19 +1,23 @@
 ﻿////string
-//String.prototype.format = function() {
-//    var args = arguments;
-//    return this.replace(/{(\d+)}/g, function(match, number) {
-//        return typeof args[number] != 'undefined'
-//            ? args[number]
-//            : match
-//            ;
-//    });
-//}
+String.prototype.format = function() {
+    var args = arguments;
+    return this.replace(/{(\d+)}/g, function(match, number) {
+        return typeof args[number] != 'undefined'
+            ? args[number]
+            : match
+            ;
+    });
+} 
 
+String.prototype.reverse=function()
+{
+    return this.split("").reverse().join("");
+}
 
-
-//interface String {
-//    format(obj: any): string;
-//}
+interface String {
+    format(obj: any): string;
+    reverse( ): string;
+}
 
 ///////////////////////
 //array

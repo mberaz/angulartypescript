@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var angular2_1 = require("angular2/angular2");
 var http_1 = require("angular2/http");
-var filterSelected_1 = require("./pipes/filterSelected");
+var stringReverse_1 = require("./pipes/stringReverse");
 var AppComponent = (function () {
     function AppComponent(http) {
         var _this = this;
@@ -26,7 +26,7 @@ var AppComponent = (function () {
     }
     AppComponent.prototype.loadHeroesData = function (list) {
         for (var i = 0; i < list.length; i++) {
-            this.heroes.push({ id: list[i].id, name: list[i].name, selected: i % 2 == 0 });
+            this.heroes.push({ id: list[i].id, name: list[i].name, selected: false });
         }
     };
     AppComponent.prototype.onChange = function (hero) {
@@ -57,7 +57,7 @@ var AppComponent = (function () {
             selector: "my-app",
             templateUrl: "/src/views/heroView.html",
             directives: [angular2_1.FORM_DIRECTIVES, angular2_1.CORE_DIRECTIVES],
-            pipes: [filterSelected_1.FilterSelected]
+            pipes: [stringReverse_1.StringReverse]
         }), 
         __metadata('design:paramtypes', [http_1.Http])
     ], AppComponent);

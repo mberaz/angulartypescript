@@ -1,12 +1,10 @@
 ﻿import { bootstrap, Component, FORM_DIRECTIVES, CORE_DIRECTIVES} from "angular2/angular2";
 import {Http, HTTP_BINDINGS} from "angular2/http";
-import {FilterSelected} from "./pipes/filterSelected";
 
 @Component({
     selector: "my-app",
     templateUrl: "/src/views/heroView.html",
     directives: [FORM_DIRECTIVES, CORE_DIRECTIVES],
-    pipes: [FilterSelected]
 })
 
 class AppComponent {

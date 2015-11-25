@@ -31,14 +31,8 @@ var AppComponent = (function () {
     };
     AppComponent.prototype.onChange = function (hero) {
         hero.selected = !hero.selected;
-        this.selectedHeroescCount = this.heroes.filter(function (x) { return x.selected; }).length;
-        //this.http.get(this.config.apiBaseUrl + "Heroes/" + hero.id)
-        //    .map(res=> res.json())
-        //    .subscribe(
-        //    data=> this.showHero(data),
-        //    err=> console.log(err),
-        //    () => {}
-        //    );
+        this.selectedHeroes = this.heroes.where(function () { return this.selected; });
+        this.selectedHeroescCount = this.selectedHeroes.length;
     };
     ;
     AppComponent.prototype.showHero = function (res) {

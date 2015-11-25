@@ -14,8 +14,10 @@ class AppComponent {
     public selectedHero: Hero;
     public heroes = [];
     public selectedHeroescCount: number = 0;
+    public selectedHeroes: Array<Hero>;
     public http: any;
     public config: Config;
+
     constructor(http: Http) {
         this.config = new Config();
         this.http = http;
@@ -36,15 +38,8 @@ class AppComponent {
 
     onChange(hero: Hero) {
         hero.selected = !hero.selected;
-        this.selectedHeroescCount = this.heroes.filter(function(x:any) { return x.selected; }).length;
-
-        //this.http.get(this.config.apiBaseUrl + "Heroes/" + hero.id)
-        //    .map(res=> res.json())
-        //    .subscribe(
-        //    data=> this.showHero(data),
-        //    err=> console.log(err),
-        //    () => {}
-        //    );
+        this.selectedHeroes = this.heroes.where(function ( ) { return this.selected; });
+        this.selectedHeroescCount= this.selectedHeroes.length;
     };
     showHero(res: any)
     {

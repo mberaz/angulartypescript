@@ -22,3 +22,15 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+.remove-icon {
+    background-color: red;
+    border-radius: 6px;
+}
+
+
+.selected
+{
+    border:1px solid black;
+}

@@ -40,6 +40,12 @@ namespace API.Controllers
             return new ReturnModel { Status = true, Id = list.Count };
         }
 
+        [HttpPut]
+        public ReturnModel Put ( ListItem item )
+        {
+            var listItem = list.FirstOrDefault(l => l.Id == item.Id);
+            return new ReturnModel { Status = true, Id = list.Count };
+        }
 
     }
 }

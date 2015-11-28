@@ -42,18 +42,16 @@
             </li>
         </ul>
 
-        <!--<div *ng-if="selecteditem">
-            <h2>{{selecteditem.name}} details!</h2>
+        <div *ng-if="selectedItem">
+            <h2>{{selectedItem.name}} details!</h2>
             <div>
-                <label>id: </label>{{selecteditem.id}}
+                <label>id: </label>{{selectedItem.id}}
             </div>
             <div>
                 <label>name: </label>
-
-                <span>{{selecteditem.name|stringReverse }}</span>
-                <input [(ng-model)]="selecteditem.name" placeholder="name" />
+                <input [(ng-model)]="selectedItem.name" (focusout)="updateName(selectedItem)" placeholder="name" />
             </div>
-        </div>-->
+        </div>
 
 
     </div><!--END jumbotron-->

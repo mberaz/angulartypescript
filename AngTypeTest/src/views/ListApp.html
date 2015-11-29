@@ -26,19 +26,31 @@
         </div><!--/.nav-collapse -->
     </div>
 </nav>
- 
+
 <div class="container theme-showcase" role="main">
 
     <div class="jumbotron">
+        <button type="button" class="btn btn-success" (click)="addItem( $event,'newItemNames')">Add new item</button>
+
+        <div *ng-if="addingNew">
+            <h2>New item details!</h2>
+            <div>
+                <label>name: </label>
+                <input [(ng-model)]="newItem.name" placeholder="name" />
+            </div>
+            <button type="button" class="btn btn-success" (click)="SaveNewItem(newItem)"  #newItemName >Save</button>
+            <button type="button" class="btn btn-danger" (click)="cancel( )">cancel</button>
+        </div>
+        <br />
         <span class="label label-warning">{{'Remaining items:'+ (remainingItemsCount)}}</span>
 
+        <h2>ToDo</h2>
         <ul class="itemes">
-            <li *ng-for="#item of items; #i=index" (click)="onSelect(item)" [ng-class]="getSelectedClass(item)">
+            <li *ng-for="#item of unDoneItems; #i=index" (click)="onSelect(item)" [ng-class]="getSelectedClass(item)">
                 <input type="checkbox" (change)="onChange(item)" [(ng-model)]="item.isDone" title="Mark as done" />
                 <span class="label" [ng-class]="setClass(item)">{{item.name}}</span>
-               
-                <span class="glyphicon glyphicon-remove remove-icon" aria-hidden="true"></span>
 
+                <span class="glyphicon glyphicon-remove remove-icon" aria-hidden="true"></span>
             </li>
         </ul>
 
@@ -53,10 +65,15 @@
             </div>
         </div>
 
+        <h2>Done</h2>
+        <ul class="itemes">
+            <li *ng-for="#item of doneItems; #i=index" (click)="onSelect(item)" [ng-class]="getSelectedClass(item)">
+                <input type="checkbox" (change)="onChange(item)" [(ng-model)]="item.isDone" title="Mark as done" />
+                <span class="label" [ng-class]="setClass(item)">{{item.name}}</span>
+
+                <span class="glyphicon glyphicon-remove remove-icon" aria-hidden="true"></span>
+            </li>
+        </ul>
 
     </div><!--END jumbotron-->
 </div><!--END main-->
-
-
-
-

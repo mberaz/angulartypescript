@@ -1,6 +1,7 @@
 ﻿npm run tsc
 
 
+http://bchavez.bitarmory.com/archive/2015/07/23/enabling-decorators-support-in-typescript-1-5-visual-studio-2015.aspx
 
 Editing Our Hero
 

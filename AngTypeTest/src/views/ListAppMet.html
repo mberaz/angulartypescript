@@ -1,0 +1,89 @@
+﻿
+<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+    <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+        <div class="mdl-layout__header-row">
+            <span class="mdl-layout-title">{{title}}</span>
+            <div class="mdl-layout-spacer"></div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
+                    <i class="material-icons">search</i>
+                </label>
+                <div class="mdl-textfield__expandable-holder">
+                    <input class="mdl-textfield__input" type="text" id="search">
+                    <label class="mdl-textfield__label" for="search">Enter your query...</label>
+                </div>
+            </div>
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
+                <i class="material-icons">more_vert</i>
+            </button>
+            <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
+                <li class="mdl-menu__item">About</li>
+                <li class="mdl-menu__item">Contact</li>
+                <li class="mdl-menu__item">Legal information</li>
+            </ul>
+        </div>
+    </header>
+
+<!--<div class="container">
+    <h1 class="header center orange-text">Starter Project</h1>
+    <div class="row center">
+        <h5 class="header col s12 light">Michael Berezin first Material Design app</h5>
+    </div>
+    <br>
+</div>-->
+
+
+<!--<div class="container theme-showcase" role="main">
+
+    <div class="">
+        <button type="button" class="btn btn-success" (click)="addItem( $event,'newItemNames')">Add new item</button>
+
+        <div *ng-if="addingNew">
+            <h2>New item details!</h2>
+            <div>
+                <label>name: </label>
+                <input [(ng-model)]="newItem.name" placeholder="name" />
+            </div>
+            <button type="button" class="btn btn-success" (click)="SaveNewItem(newItem)" #newItemName>Save</button>
+            <button type="button" class="btn btn-danger" (click)="cancel( )">cancel</button>
+        </div>
+        <br />
+        <span class="label label-warning">{{'Remaining items:'+ (remainingItemsCount)}}</span>
+
+        <h2>ToDo</h2>
+        <ul class="itemes">
+            <li *ng-for="#item of unDoneItems; #i=index" (click)="onSelect(item)" [ng-class]="getSelectedClass(item)">
+                <input type="checkbox" (change)="onChange(item)" [(ng-model)]="item.isDone" title="Mark as done" />
+                <span class="label" [ng-class]="setClass(item)">{{item.name}}</span>
+
+                <span class="glyphicon glyphicon-remove remove-icon" aria-hidden="true"></span>
+            </li>
+        </ul>
+
+        <div *ng-if="selectedItem">
+            <h2>{{selectedItem.name}} details!</h2>
+            <div>
+                <label>id: </label>{{selectedItem.id}}
+            </div>
+            <div>
+                <label>name: </label>
+                <input [(ng-model)]="selectedItem.name" (focusout)="updateName(selectedItem)" placeholder="name" />
+            </div>
+        </div>
+
+        <h2>Done</h2>
+        <ul class="itemes">
+            <li *ng-for="#item of doneItems; #i=index" (click)="onSelect(item)" [ng-class]="getSelectedClass(item)">
+                <input type="checkbox" (change)="onChange(item)" [(ng-model)]="item.isDone" title="Mark as done" />
+                <span class="label" [ng-class]="setClass(item)">{{item.name}}</span>
+
+                <span class="glyphicon glyphicon-remove remove-icon" aria-hidden="true"></span>
+            </li>
+        </ul>
+
+    </div>
+   
+</div>-->
+
+</div>s
+<!--END main-->

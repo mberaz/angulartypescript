@@ -9,17 +9,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var angular2_1 = require('angular2/angular2');
-var http_1 = require('angular2/http');
+var angular2_1 = require("angular2/angular2");
+var http_1 = require("angular2/http");
+var stringReverse_1 = require("./pipes/stringReverse");
 var AppComponent = (function () {
     function AppComponent(http) {
         var _this = this;
-        this.title = 'Tour of Heroes';
+        this.title = "Tour of Heroes";
         this.heroes = [];
         this.selectedHeroescCount = 0;
         this.config = new Config();
         this.http = http;
-        this.http.get(this.config.apiBaseUrl + 'Heroes')
+        this.http.get(this.config.apiBaseUrl + "Heroes")
             .map(function (res) { return res.json(); })
             .subscribe(function (data) { return _this.loadHeroesData(data); }, function (err) { return console.log(err); }, function () { });
     }
@@ -29,12 +30,9 @@ var AppComponent = (function () {
         }
     };
     AppComponent.prototype.onChange = function (hero) {
-        var _this = this;
         hero.selected = !hero.selected;
-        this.selectedHeroescCount = this.heroes.filter(function (x) { return x.selected; }).length;
-        this.http.get(this.config.apiBaseUrl + 'Heroes/' + hero.id)
-            .map(function (res) { return res.json(); })
-            .subscribe(function (data) { return _this.showHero(data); }, function (err) { return console.log(err); }, function () { });
+        this.selectedHeroes = this.heroes.where(function () { return this.selected; });
+        this.selectedHeroescCount = this.selectedHeroes.length;
     };
     ;
     AppComponent.prototype.showHero = function (res) {
@@ -45,15 +43,15 @@ var AppComponent = (function () {
     };
     ;
     AppComponent.prototype.getSelectedClass = function (hero) {
-        return { 'selected': hero === this.selectedHero };
+        return { "selected": hero === this.selectedHero };
     };
     ;
     AppComponent = __decorate([
         angular2_1.Component({
-            selector: 'my-app',
-            templateUrl: '/src/views/heroView.html',
+            selector: "my-app",
+            templateUrl: "/src/views/heroView.html",
             directives: [angular2_1.FORM_DIRECTIVES, angular2_1.CORE_DIRECTIVES],
-            styles: ["\n\n  "],
+            pipes: [stringReverse_1.StringReverse]
         }), 
         __metadata('design:paramtypes', [http_1.Http])
     ], AppComponent);

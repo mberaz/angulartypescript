@@ -165,11 +165,13 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HeroesController.cs" />
+    <Compile Include="Controllers\ItemTypesController.cs" />
     <Compile Include="Controllers\TodoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Hero.cs" />
+    <Compile Include="Models\ItemType.cs" />
     <Compile Include="Models\ListItem.cs" />
     <Compile Include="Models\PostObject.cs" />
     <Compile Include="Models\ReturnModel.cs" />

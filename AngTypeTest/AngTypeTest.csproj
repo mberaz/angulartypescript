@@ -167,6 +167,7 @@
     <TypeScriptCompile Include="src\app\common.ts" />
     <TypeScriptCompile Include="src\app\pipes\filterSelected.ts" />
     <TypeScriptCompile Include="src\app\pipes\stringReverse.ts" />
+    <TypeScriptCompile Include="src\Todo\ItemType.ts" />
     <TypeScriptCompile Include="src\Todo\ListItem.ts" />
   </ItemGroup>
   <ItemGroup>

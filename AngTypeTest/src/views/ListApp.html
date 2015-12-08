@@ -63,7 +63,7 @@
                 <input [(ng-model)]="selectedItem.name" (focusout)="updateName(selectedItem)" placeholder="name" />
             </div>
             <div>
-               <select [(ng-model)]="selectedType">
+               <select [(ng-model)]="selectedTypeName">
                    <option *ng-for="#type of types" id="{{type.id}}">{{type.name}}</option>
                </select>
             </div>

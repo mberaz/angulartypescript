@@ -22,8 +22,11 @@ class AppComponent {
     public remainingItemsCount: Number;
     public addingNew: boolean;
     public headers: Headers;
-    public types= [];
-    public selectedType:ItemType;
+    //public types= [];
+    public types: ItemType[];
+    public selectedType: ItemType;
+    public selectedTypeName: string;
+
 
     constructor(http: Http) {
         this.config = new Config();
@@ -31,6 +34,8 @@ class AppComponent {
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
         this.addingNew = false;
+
+        this.types = new Array<ItemType>();
         this.http.get(this.config.apiBaseUrl + "Todo")
             .map(res=> res.json())
             .subscribe(
@@ -52,9 +57,11 @@ class AppComponent {
     loadTypes(list: any){
         for (var i = 0; i < list.length; i++)
         {
-            this.types.push({ id: list[i].Id, name: list[i].Name });
-            //this.types.push(new ItemType(list[i].Id, list[i].Name));
+            this.types.push(new ItemType(list[i].Id, list[i].Name));
         }
+
+        this.selectedType = this.types[0];
+        this.selectedTypeName = this.selectedType.name;
     }
 
     loadData(list: any) {

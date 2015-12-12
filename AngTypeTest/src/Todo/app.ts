@@ -25,7 +25,7 @@ class AppComponent {
     //public types= [];
     public types: ItemType[];
     public selectedType: ItemType;
-    public selectedTypeId: number;
+    public selectedTypeName: string;
 
 
     constructor(http: Http) {
@@ -61,7 +61,7 @@ class AppComponent {
         }
 
         this.selectedType = this.types[0];
-        this.selectedTypeId = this.selectedType.id;
+        this.selectedTypeName = this.selectedType.name;
     }
 
     loadData(list: any) {

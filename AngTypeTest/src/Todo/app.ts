@@ -26,7 +26,7 @@ class AppComponent
     //public types= [];
     public types: ItemType[];
     public selectedType: ItemType;
-    public selectedTypeName: string;
+    public selectedTypeId: number;
 
 
     constructor(http: Http)
@@ -64,7 +64,7 @@ class AppComponent
         }
 
         this.selectedType = this.types[0];
-        this.selectedTypeName = this.selectedType.name;
+        this.selectedTypeId = this.selectedType.id;
     }
 
     loadData(list: any)
@@ -81,7 +81,9 @@ class AppComponent
 
     onTypeSelection(event: any)
     {
-        alert("dd");
+        this.selectedTypeId = parseInt(event.currentTarget.value);
+
+        alert(0 - this.selectedTypeId);
     }
 
     onChange(item: ListItem)

@@ -74,11 +74,8 @@ class AppComponent {
         this.remainingItemsCount = this.items.length - this.doneItems.length;
     }
 
-    onTypeSelection(event: any)
-    {
-        this.selectedTypeId = parseInt(event.currentTarget.value);
-
-        alert(0 - this.selectedTypeId);
+    onTypeSelection(event: any) {
+        alert("dd");
     }
 
     onChange(item: ListItem) {

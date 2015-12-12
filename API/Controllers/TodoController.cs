@@ -12,12 +12,12 @@ namespace API.Controllers
     {
         List<ListItem> list = new List<ListItem>
         {
-            new ListItem{ Id= 1, Name= "Buy milk", IsDone=false },
-            new ListItem{ Id= 2, Name= "Buy shoes", IsDone=true  },
-            new ListItem{ Id= 3, Name= "Throw away trash" , IsDone=false },
-            new ListItem{ Id= 4, Name= "Play fallout 4", IsDone=false  },
-            new ListItem{ Id= 5, Name= "play fm" , IsDone=true },
-            new ListItem{ Id= 6, Name= "chill", IsDone=false  },
+            new ListItem{ Id= 1, Name= "Buy milk", IsDone=false, Type=1 },
+            new ListItem{ Id= 2, Name= "Buy shoes", IsDone=true, Type=1  },
+            new ListItem{ Id= 3, Name= "Throw away trash" , IsDone=false, Type=4 },
+            new ListItem{ Id= 4, Name= "Play fallout 4", IsDone=false, Type=2  },
+            new ListItem{ Id= 5, Name= "play fm" , IsDone=true, Type=2 },
+            new ListItem{ Id= 6, Name= "chill", IsDone=false, Type=3  },
 
         };
 

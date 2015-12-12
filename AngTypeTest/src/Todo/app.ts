@@ -1,4 +1,9 @@
-﻿import { bootstrap, Component, FORM_DIRECTIVES, CORE_DIRECTIVES} from "angular2/angular2";
+﻿/// <reference path="itemtype.ts" />
+/// <reference path="listitem.ts" />
+/// <reference path="common.ts" />
+/// <reference path="config.ts" />
+
+import { bootstrap, Component, FORM_DIRECTIVES, CORE_DIRECTIVES} from "angular2/angular2";
 import {Http, HTTP_BINDINGS, Headers} from "angular2/http";
 
 
@@ -14,7 +19,6 @@ class AppComponent {
     public navBarLInkText = "a random link";
     public selectedItem: ListItem;
     public newItem: ListItem;
-    public items = [];
     public http: any;
     public config: Config;
     public doneItems: Array<ListItem>;
@@ -22,8 +26,8 @@ class AppComponent {
     public remainingItemsCount: Number;
     public addingNew: boolean;
     public headers: Headers;
-    //public types= [];
-    public types: ItemType[];
+    public items =new Array<ListItem>();
+    public types = new Array<ItemType>();
     public selectedType: ItemType;
     public selectedTypeId: number;
 
@@ -35,11 +39,10 @@ class AppComponent {
         this.headers.append('Content-Type', 'application/json');
         this.addingNew = false;
 
-        this.types = new Array<ItemType>();
         this.http.get(this.config.apiBaseUrl + "Todo")
             .map(res=> res.json())
             .subscribe(
-            data => this.loadData(data),
+            data=> this.loadData(data),
             err=> console.log(err),
             () => { }
             );
@@ -66,7 +69,7 @@ class AppComponent {
 
     loadData(list: any) {
         for (var i = 0; i < list.length; i++) {
-            this.items.push({ id: list[i].Id, name: list[i].Name, isDone: list[i].IsDone });
+            this.items.push(new ListItem(list[i].Id, list[i].Name, list[i].IsDone, list[i].Type ));
         }
 
         this.doneItems = this.items.where(function() { return this.isDone; });
@@ -88,9 +91,9 @@ class AppComponent {
     };
 
 
-    addItem(event, el) {
+    addItem(event:any ) {
         this.addingNew = true;
-        this.newItem = new ListItem();
+        this.newItem = ListItem.CreateEmptyListItem();
     }
 
     SaveNewItem() {
@@ -103,23 +106,20 @@ class AppComponent {
             .subscribe(
             data => this.saveCallback(data),
             err=> console.log(err),
-            () => { }
+            () => {}
             );
     }
 
     saveCallback(data: any) {
-        this.unDoneItems.push({ id: data.Id, name: this.newItem.name, isDone: false });
+        this.unDoneItems.push(new ListItem( data.Id, this.newItem.name,  false,1));
     }
 
     cancel() {
         this.addingNew = false;
     }
-    //showHero(res: any)
-    //{
-    //    alert("Hero from server: " + res.name);
-    //}
     onSelect(item: ListItem) {
         this.selectedItem = item;
+        this.selectedTypeId = item.type;
     };
 
     setClass(item: ListItem) {

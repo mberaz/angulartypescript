@@ -90,13 +90,14 @@ class AppComponent {
 
     search(term: string) {
 
+        term = term.toLowerCase();
         if (!term) {
             this.doneItems = this.items.where(function () { return this.isDone; });
             this.unDoneItems = this.items.where(function () { return !this.isDone; });
         } 
         else {
-            this.doneItems = this.items.where(function () { return this.isDone && this.name.toLowerCase().indexOf(term.toLowerCase())>-1; });
-            this.unDoneItems = this.items.where(function () { return !this.isDone && this.name.toLowerCase().indexOf(term.toLowerCase()) > -1; });
+            this.doneItems = this.items.where(function () { return this.isDone && this.name.toLowerCase().indexOf(term)>-1; });
+            this.unDoneItems = this.items.where(function () { return !this.isDone && this.name.toLowerCase().indexOf(term) > -1; });
         }
         
     }

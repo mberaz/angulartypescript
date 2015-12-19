@@ -18,11 +18,18 @@
 <div class="container theme-showcase" role="main">
 
     <div class="jumbotron">
-
+        <!--  search-->
         <div>
             <label class="label label-success">Search</label>
-            <input type="text" (keyup)="search(searchTerm)" [(ng-model)]="searchTerm" placeholder="Search"/>
+            <input type="text" (keyup)="search(searchTerm)" [(ng-model)]="searchTerm" placeholder="Search" />
+
+             <span *ng-for="#type of types">
+                 <input type="checkbox" (click)="toggleTypeFilter(type)"/> {{type.name}}
+             </span>
         </div>
+
+        <!-- end search-->
+
         <button type="button" class="btn btn-success" (click)="addItem( $event,'newItemNames')">Add new item</button>
 
         <div *ng-if="addingNew">

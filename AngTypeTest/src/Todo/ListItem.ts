@@ -2,16 +2,17 @@
     id: number;
     name: string;
     isDone: boolean;
-    type: number;
-    constructor(id: number, name: string, isDone: boolean, type: number) {
+   // type: number;
+    itemType: ItemType;
+    constructor(id: number, name: string, isDone: boolean, itemType: ItemType) {
         this.id = id;
         this.name = name;
         this.isDone = isDone;
-        this.type = type;
+        this.itemType = itemType;
     }
 
     static CreateEmptyListItem() {
-        return new ListItem(0, "", false, 1);
+        return new ListItem(0, "", false, new ItemType(0,"Select a type"));
     }
 
 }

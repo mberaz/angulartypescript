@@ -8,7 +8,7 @@ using System.Web.Http;
 
 namespace API.Controllers
 {
-    public class TodoController : ApiController
+    public class TodoController :ApiController
     {
         List<ListItem> list = new List<ListItem>
         {
@@ -18,6 +18,12 @@ namespace API.Controllers
             new ListItem{ Id= 4, Name= "Play fallout 4", IsDone=false, Type=2  },
             new ListItem{ Id= 5, Name= "play fm" , IsDone=true, Type=2 },
             new ListItem{ Id= 6, Name= "chill", IsDone=false, Type=3  },
+            new ListItem{ Id= 1, Name= "Buy T shirt", IsDone=false, Type=1 },
+            new ListItem{ Id= 2, Name= "Clean house", IsDone=true, Type=1  },
+            new ListItem{ Id= 3, Name= "Throw away old shoes" , IsDone=false, Type=4 },
+            new ListItem{ Id= 4, Name= "Play more fallout 4", IsDone=false, Type=2  },
+            new ListItem{ Id= 5, Name= "See star wars " , IsDone=true, Type=5 },
+            new ListItem{ Id= 6, Name= "Spoil star wars ", IsDone=false, Type=5  },
 
         };
 
@@ -29,22 +35,22 @@ namespace API.Controllers
 
         // GET api/values/5
         [HttpGet]
-        public ListItem Get ( int id )
+        public ListItem Get (int id)
         {
             return list.FirstOrDefault(l => l.Id == id);
         }
 
         [HttpPost]
-        public ReturnModel Post ( ListItem item )
+        public ReturnModel Post (ListItem item)
         {
-            return new ReturnModel { Status = true, Id = list.Count };
+            return new ReturnModel { Status = true,Id = list.Count,Type = item.Type };
         }
 
         [HttpPut]
-        public ReturnModel Put ( ListItem item )
+        public ReturnModel Put (ListItem item)
         {
             var listItem = list.FirstOrDefault(l => l.Id == item.Id);
-            return new ReturnModel { Status = true, Id = list.Count };
+            return new ReturnModel { Status = true,Id = list.Count };
         }
 
     }

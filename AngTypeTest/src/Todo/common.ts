@@ -48,7 +48,25 @@ Array.prototype.where = function (fnPredicate)
 
     return matches;
 };
+
+
+Array.prototype.first = function (fnPredicate) { 
+    var len = this.length;
+    if (typeof fnPredicate != "function")
+        throw new TypeError();
+
+    for (var i = 0; i < len; i++) {
+        if (i in this) {
+            var match = fnPredicate.call(this[i]);
+            if (match)
+                return this[i];
+        }
+    }
+
+    return null;
+};
 interface Array<T>
 {
     where(obj: any): Array<T>;
+    first(obj: any): any;
 }

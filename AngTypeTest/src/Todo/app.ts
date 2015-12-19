@@ -26,10 +26,12 @@ class AppComponent {
     public remainingItemsCount: Number;
     public addingNew: boolean;
     public headers: Headers;
-    public items =new Array<ListItem>();
+    public items = new Array<ListItem>();
     public types = new Array<ItemType>();
     public selectedType: ItemType;
     public selectedTypeId: number;
+
+    public searchTerm: string;
 
 
     constructor(http: Http) {
@@ -38,65 +40,93 @@ class AppComponent {
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
         this.addingNew = false;
+        this.searchTerm = "";
+        //this.http.get(this.config.apiBaseUrl + "ItemTypes")
+        //    .map(res=> res.json())
+        //    .subscribe(
+        //    data => this.loadTypes(data),
+        //    err=> console.log(err),
+        //    () => { }
+        //    );
 
         this.http.get(this.config.apiBaseUrl + "Todo")
             .map(res=> res.json())
             .subscribe(
-            data=> this.loadData(data),
+            data=> this.loadItems(data),
             err=> console.log(err),
             () => { }
             );
-
-        this.http.get(this.config.apiBaseUrl + "ItemTypes")
-            .map(res=> res.json())
-            .subscribe(
-            data => this.loadTypes(data),
-            err=> console.log(err),
-            () => { }
-            );
-
     }
 
-    loadTypes(list: any){
-        for (var i = 0; i < list.length; i++)
-        {
+    loadTypes(itemList: any, list: any) {
+        for (var i = 0; i < list.length; i++) {
             this.types.push(new ItemType(list[i].Id, list[i].Name));
         }
 
         this.selectedType = this.types[0];
         this.selectedTypeId = this.selectedType.id;
-    }
 
-    loadData(list: any) {
-        for (var i = 0; i < list.length; i++) {
-            this.items.push(new ListItem(list[i].Id, list[i].Name, list[i].IsDone, list[i].Type ));
+        for (var i = 0; i < itemList.length; i++) {
+            var type = this.getType(itemList[i].Type); 
+
+            this.items.push(new ListItem(itemList[i].Id, itemList[i].Name, itemList[i].IsDone, type));
         }
 
-        this.doneItems = this.items.where(function() { return this.isDone; });
-        this.unDoneItems = this.items.where(function() { return !this.isDone; });
+        this.doneItems = this.items.where(function () { return this.isDone; });
+        this.unDoneItems = this.items.where(function () { return !this.isDone; });
         this.remainingItemsCount = this.items.length - this.doneItems.length;
     }
 
-    onTypeSelection(event: any) {
+    loadItems(itemList: any) {
 
-        this.selectedTypeId = parseInt(event.currentTarget.value);
-        alert(0 - this.selectedTypeId);
+        this.http.get(this.config.apiBaseUrl + "ItemTypes")
+            .map(res=> res.json())
+            .subscribe(
+            data => this.loadTypes(itemList, data),
+            err=> console.log(err),
+            () => { }
+            );
     }
 
+    search(term: string) {
+
+        if (!term) {
+            this.doneItems = this.items.where(function () { return this.isDone; });
+            this.unDoneItems = this.items.where(function () { return !this.isDone; });
+        } 
+        else {
+            this.doneItems = this.items.where(function () { return this.isDone && this.name.toLowerCase().indexOf(term.toLowerCase())>-1; });
+            this.unDoneItems = this.items.where(function () { return !this.isDone && this.name.toLowerCase().indexOf(term.toLowerCase()) > -1; });
+        }
+        
+    }
+
+    getType(id) {
+
+        if (this.types) {
+            return this.types.first(function () { return this.id == id });
+        }
+    }
     onChange(item: ListItem) {
         item.isDone = !item.isDone;
-        this.doneItems = this.items.where(function() { return this.isDone; });
-        this.unDoneItems = this.items.where(function() { return !this.isDone; });
+        this.doneItems = this.items.where(function () { return this.isDone; });
+        this.unDoneItems = this.items.where(function () { return !this.isDone; });
         this.remainingItemsCount = this.items.length - this.doneItems.length;
     };
 
 
-    addItem(event:any ) {
+    addItem(event: any) {
         this.addingNew = true;
         this.newItem = ListItem.CreateEmptyListItem();
     }
 
     SaveNewItem() {
+
+        if (this.newItem.itemType.id === 0 || this.newItem.name.trim() === '') {
+            alert("You must fill all of the data!");
+            return;
+        }
+
         this.addingNew = false;
         var data = JSON.stringify(this.newItem);
         this.http.post(this.config.apiBaseUrl + "Todo", data, {
@@ -106,12 +136,13 @@ class AppComponent {
             .subscribe(
             data => this.saveCallback(data),
             err=> console.log(err),
-            () => {}
+            () => { }
             );
     }
 
     saveCallback(data: any) {
-        this.unDoneItems.push(new ListItem( data.Id, this.newItem.name,  false,1));
+
+        this.unDoneItems.push(new ListItem(data.Id, this.newItem.name, false, this.getType(data.Type)));
     }
 
     cancel() {
@@ -119,7 +150,7 @@ class AppComponent {
     }
     onSelect(item: ListItem) {
         this.selectedItem = item;
-        this.selectedTypeId = item.type;
+       // this.selectedTypeId = item.type;
     };
 
     setClass(item: ListItem) {

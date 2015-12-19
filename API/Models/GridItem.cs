@@ -5,10 +5,9 @@ using System.Web;
 
 namespace API.Models
 {
-    public class ReturnModel
+    public class GridItem
     {
         public int Id { get; set; }
-        public bool Status { get; set; }
-        public int Type { get; set; }
+        public string Name { get; set; }
     }
 }

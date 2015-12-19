@@ -5,7 +5,7 @@ using System.Web.Http;
 
 namespace API.Controllers
 {
-    public class ItemTypesController : ApiController
+    public class ItemTypesController :ApiController
     {
         List<ItemType> list = new List<ItemType>
         {
@@ -13,6 +13,7 @@ namespace API.Controllers
             new ItemType{ Id= 2, Name= "Games"   },
             new ItemType{ Id= 3, Name= "Actions"  },
             new ItemType{ Id= 4, Name= "Misc"  },
+            new ItemType{ Id= 5, Name= "Films"  },
 
         };
 

@@ -50,13 +50,16 @@ Array.prototype.where = function (fnPredicate)
 };
 
 
-Array.prototype.first = function (fnPredicate) { 
+Array.prototype.first = function (fnPredicate)
+{
     var len = this.length;
     if (typeof fnPredicate != "function")
         throw new TypeError();
 
-    for (var i = 0; i < len; i++) {
-        if (i in this) {
+    for (var i = 0; i < len; i++)
+    {
+        if (i in this)
+        {
             var match = fnPredicate.call(this[i]);
             if (match)
                 return this[i];
@@ -65,8 +68,30 @@ Array.prototype.first = function (fnPredicate) {
 
     return null;
 };
+
+Array.prototype.select = function (fnPredicate)
+{/// <summary>Description</summary>
+    var len = this.length;
+    if (typeof fnPredicate != "function")
+        throw new TypeError();
+
+    var vals = [];
+    for (var i = 0; i < len; i++)
+    {
+        if (i in this)
+        {
+            var value = fnPredicate.call(this[i]);
+            vals.push(value);
+
+        }
+    }
+
+    return vals;
+};
+
 interface Array<T>
 {
     where(obj: any): Array<T>;
     first(obj: any): any;
+    select(obj: any): any[];
 }

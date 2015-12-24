@@ -158,15 +158,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="src\app\app.ts" />
     <TypeScriptCompile Include="src\Todo\app.ts" />
     <TypeScriptCompile Include="src\Todo\common.ts" />
     <TypeScriptCompile Include="src\Todo\config.ts" />
-    <TypeScriptCompile Include="src\app\hero.ts" />
-    <TypeScriptCompile Include="src\app\heroesList.ts" />
-    <TypeScriptCompile Include="src\app\common.ts" />
-    <TypeScriptCompile Include="src\app\pipes\filterSelected.ts" />
-    <TypeScriptCompile Include="src\app\pipes\stringReverse.ts" />
     <TypeScriptCompile Include="src\Todo\ItemType.ts" />
     <TypeScriptCompile Include="src\Todo\ListItem.ts" />
   </ItemGroup>

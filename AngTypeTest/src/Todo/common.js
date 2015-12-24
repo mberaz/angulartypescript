@@ -30,4 +30,30 @@ Array.prototype.where = function (fnPredicate) {
     }
     return matches;
 };
+Array.prototype.first = function (fnPredicate) {
+    var len = this.length;
+    if (typeof fnPredicate != "function")
+        throw new TypeError();
+    for (var i = 0; i < len; i++) {
+        if (i in this) {
+            var match = fnPredicate.call(this[i]);
+            if (match)
+                return this[i];
+        }
+    }
+    return null;
+};
+Array.prototype.select = function (fnPredicate) {
+    var len = this.length;
+    if (typeof fnPredicate != "function")
+        throw new TypeError();
+    var vals = [];
+    for (var i = 0; i < len; i++) {
+        if (i in this) {
+            var value = fnPredicate.call(this[i]);
+            vals.push(value);
+        }
+    }
+    return vals;
+};
 //# sourceMappingURL=common.js.map

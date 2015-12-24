@@ -68,7 +68,7 @@ class AppComponent
         {
             var type = this.getType(itemList[i].Type);
 
-            this.items.push(new ListItem(itemList[i].Id, itemList[i].Name, itemList[i].IsDone, type));
+            this.items.push(new ListItem(itemList[i].Id, itemList[i].Name, itemList[i].IsDone, new ItemType(type.id, type.name)));
         }
 
         this.doneItems = this.items.where(function () { return this.isDone; });
@@ -109,20 +109,20 @@ class AppComponent
     {
         var index = this.filerTypes.indexOf(type);
 
-        if (index == -1)
-        {//add
+        if (index === -1)
+        {//add to array
             this.filerTypes.push(type);
         }
         else
-        {//remove
-            this.filerTypes.slice(index, 1);
+        {//remove from array
+            this.filerTypes = this.filerTypes.slice(index, 0);
         }
 
         if (this.filerTypes.length > 0)
         {
-            var cloneTypes = this.filerTypes;
-            this.doneItems = this.items.where(function () { return this.isDone && cloneTypes.indexOf(this.itemType) > -1; });
-            this.unDoneItems = this.items.where(function () { return !this.isDone && cloneTypes.indexOf(this.itemType) > -1; });
+            var typeIds = this.filerTypes.select(function () { return this.id; });
+            this.doneItems = this.items.where(function () { return this.isDone && typeIds.indexOf(this.itemType.id) > -1; });
+            this.unDoneItems = this.items.where(function () { return !this.isDone && typeIds.indexOf(this.itemType.id) > -1; });
         }
         else
         {
@@ -145,13 +145,26 @@ class AppComponent
         this.doneItems = this.items.where(function () { return this.isDone; });
         this.unDoneItems = this.items.where(function () { return !this.isDone; });
         this.remainingItemsCount = this.items.length - this.doneItems.length;
-    };
-
+    }
 
     addItem(event: any)
     {
         this.addingNew = true;
         this.newItem = ListItem.CreateEmptyListItem();
+    }
+
+    newItemTypeChange(event: any)
+    {
+        if (event.currentTarget.value)
+        {
+            var type = this.types.first(function () { return this.id === parseInt(event.currentTarget.value) });
+            if (type)
+            {
+                this.newItem.itemType = type;
+            }
+
+        }
+
     }
 
     SaveNewItem()
@@ -190,18 +203,30 @@ class AppComponent
     {
         this.selectedItem = item;
         // this.selectedTypeId = item.type;
-    };
+    }
 
     setClass(item: ListItem)
     {
         return item.isDone ? "label-success" : "label-info";
-    };
+    }
+
+    changeSelectedItemType(event: any)
+    {
+        if (!event.currentTarget.value)
+        {
+            return;
+        }
+
+        var newType = this.getType(parseInt(event.currentTarget.value));
+        this.selectedItem.itemType = newType;
+    }
 
 
     getSelectedClass(item: ListItem)
     {
         return { "selected": item === this.selectedItem };
-    };
+    }
+
 
     updateName(item: ListItem)
     {

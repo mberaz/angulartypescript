@@ -23,9 +23,9 @@
             <label class="label label-success">Search</label>
             <input type="text" (keyup)="search(searchTerm)" [(ng-model)]="searchTerm" placeholder="Search" />
 
-             <span *ng-for="#type of types">
-                 <input type="checkbox" (click)="toggleTypeFilter(type)"/> {{type.name}}
-             </span>
+            <span *ng-for="#type of types">
+                <input type="checkbox" (click)="toggleTypeFilter(type)" /> {{type.name}}
+            </span>
         </div>
 
         <!-- end search-->
@@ -40,7 +40,7 @@
             </div>
             <div>
                 <label>type: </label>
-                <select [(ng-model)]="newItem.itemType.id">
+                <select [(ng-model)]="newItem.itemType.id" (change)="newItemTypeChange($event)">
                     <option value="0">
                         Select a type
                     </option>
@@ -65,7 +65,7 @@
             </div>
             <div>
                 <label>type: </label>
-                <select [(ng-model)]="selectedItem.itemType.id">
+                <select [(ng-model)]="selectedItem.itemType.id" (change)="changeSelectedItemType($event)">
                     <option *ng-for="#type of types" value="{{type.id}}">{{type.name}}</option>
                 </select>
             </div>

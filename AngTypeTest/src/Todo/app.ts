@@ -3,6 +3,7 @@
 /// <reference path="common.ts" />
 /// <reference path="config.ts" />
 
+
 import { bootstrap, Component, FORM_DIRECTIVES, CORE_DIRECTIVES} from "angular2/angular2";
 import {Http, HTTP_BINDINGS, Headers} from "angular2/http";
 
@@ -45,47 +46,42 @@ class AppComponent
         this.addingNew = false;
         this.searchTerm = "";
 
-        this.http.get(this.config.apiBaseUrl + "Todo")
-            .map(res=> res.json())
-            .subscribe(
-            data=> this.loadItems(data),
-            err=> console.log(err),
-            () => { }
-            );
+        //this.http.get(this.config.apiBaseUrl + "Todo")
+        //    .map(res=> res.json())
+        //    .subscribe(
+        //    data=> this.loadItems(data),
+        //    err=> console.log(err),
+        //    () => { }
+        //    );
+
+        var urls = [this.config.apiBaseUrl + "Todo", this.config.apiBaseUrl + "ItemTypes" ];
+        Promise.all(urls.map(url =>
+            fetch(url).then(resp => resp.json())
+        )).then(results =>
+        {
+            this.loadTypes(results[0], results[1]);
+            });
+
     }
 
-    loadTypes(itemList: any, list: any)
+    loadTypes(itemList: any, typeList: any)
     {
-        for (var i = 0; i < list.length; i++)
+        for (var i = 0; i < typeList.length; i++)
         {
-            this.types.push(new ItemType(list[i].Id, list[i].Name));
+            this.types.push(new ItemType(typeList[i].Id, typeList[i].Name));
         }
 
         this.selectedType = this.types[0];
 
-
         for (var i = 0; i < itemList.length; i++)
         {
             var type = this.getType(itemList[i].Type);
-
             this.items.push(new ListItem(itemList[i].Id, itemList[i].Name, itemList[i].IsDone, new ItemType(type.id, type.name)));
         }
 
         this.doneItems = this.items.where(function () { return this.isDone; });
         this.unDoneItems = this.items.where(function () { return !this.isDone; });
         this.remainingItemsCount = this.items.length - this.doneItems.length;
-    }
-
-    loadItems(itemList: any)
-    {
-
-        this.http.get(this.config.apiBaseUrl + "ItemTypes")
-            .map(res=> res.json())
-            .subscribe(
-            data => this.loadTypes(itemList, data),
-            err=> console.log(err),
-            () => { }
-            );
     }
 
     search(term: string)

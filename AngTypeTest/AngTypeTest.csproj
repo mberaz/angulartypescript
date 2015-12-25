@@ -103,6 +103,7 @@
     <Content Include="css\navbar.css" />
     <Content Include="packages.config" />
     <Content Include="package.json" />
+    <TypeScriptCompile Include="src\Todo\ModelOpener.ts" />
     <TypeScriptCompile Include="src\Todo\Scripts\typings\whatwg-fetch\whatwg-fetch.d.ts" />
     <Content Include="src\tsconfig.json" />
     <Content Include="jsons\stuff.json" />
@@ -149,9 +150,6 @@
     <Content Include="css\Site.css" />
     <Content Include="npm.txt" />
     <Content Include="src\index.html" />
-    <Content Include="src\views\appTitle.html" />
-    <Content Include="src\views\heroView.html" />
-    <Content Include="src\views\ListAppMet.html" />
     <Content Include="src\views\ListApp.html" />
     <Content Include="Web.config" />
   </ItemGroup>

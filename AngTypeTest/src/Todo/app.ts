@@ -32,6 +32,7 @@ class AppComponent
     public types = new Array<ItemType>();
     public filerTypes = new Array<ItemType>();
     public selectedType: ItemType;
+    public modal: ModelOpener;
 
 
     public searchTerm: string;
@@ -45,6 +46,7 @@ class AppComponent
         this.headers.append('Content-Type', 'application/json');
         this.addingNew = false;
         this.searchTerm = "";
+        this.modal = new ModelOpener();
 
         //this.http.get(this.config.apiBaseUrl + "Todo")
         //    .map(res=> res.json())
@@ -242,6 +244,16 @@ class AppComponent
     {
         alert("ok");
     }
+
+    openModal()
+    {
+        this.modal.showModal("header", "message");
+    }
+
+    closeModal()
+    {
+        this.modal.hideModal();
+    }  
 }
 
 

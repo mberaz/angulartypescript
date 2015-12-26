@@ -242,18 +242,14 @@ class AppComponent
 
     showAlert(data: any)
     {
-        alert("ok");
+        alert(data);
     }
 
     openModal()
     {
-        this.modal.showModal("header", "message");
+        //function (res) { alert(res ? "ok" : "cancel");
+        this.modal.prompt("header", "message to me", null, function (res) { alert(res ); });
     }
-
-    closeModal()
-    {
-        this.modal.hideModal();
-    }  
 }
 
 

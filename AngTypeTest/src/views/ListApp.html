@@ -104,13 +104,18 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" (click)="closeModal()">&times;</button>
-                        <h4 class="modal-title">Modal Header</h4>
+                        <h4 class="modal-title">{{modal.modalHeader}}</h4>
                     </div>
                     <div class="modal-body">
-                        <p>Some text in the modal.</p>
+                        <p>{{modal.modalBody}}</p>
+
+                        <div [style.display]="modal.promtDisplay">
+                            <input type="text" [(ng-model)]="modal.promptResult" />
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeModal()" >Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" [style.display]="modal.cancelButtonDisplay" (click)="modal.cancelModal()" >Cancel</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"  (click)="modal.hideModal()">OK</button>
                     </div>
                 </div>
 

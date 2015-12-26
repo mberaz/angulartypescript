@@ -253,4 +253,4 @@ class AppComponent
 }
 
 
-bootstrap(AppComponent, [HTTP_BINDINGS]);
+bootstrap(AppComponent, [HTTP_BINDINGS]); 

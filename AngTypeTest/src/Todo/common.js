@@ -14,18 +14,17 @@ String.prototype.reverse = function () {
 //array
 //////
 Array.prototype.where = function (fnPredicate) {
-    // (items = self.items().where(function() {return this.ItemID() < currentItemID;}))
+    /// <param name="fnPredicate" type="function">search function delegete (items = self.items().where(function() {return this.ItemID() < currentItemID;}))</param>
     var len = this.length;
-    if (typeof fnPredicate !== "function") {
+    if (typeof fnPredicate != "function") {
         throw new TypeError();
     }
     var matches = [];
     for (var i = 0; i < len; i++) {
         if (i in this) {
-            var match = fnPredicate.call(this[i]);
-            if (match) {
+            var match = fnPredicate.call((void 0), this[i]);
+            if (match)
                 matches.push(this[i]);
-            }
         }
     }
     return matches;
@@ -36,7 +35,7 @@ Array.prototype.first = function (fnPredicate) {
         throw new TypeError();
     for (var i = 0; i < len; i++) {
         if (i in this) {
-            var match = fnPredicate.call(this[i]);
+            var match = fnPredicate.call((void 0), this[i]);
             if (match)
                 return this[i];
         }
@@ -50,7 +49,7 @@ Array.prototype.select = function (fnPredicate) {
     var vals = [];
     for (var i = 0; i < len; i++) {
         if (i in this) {
-            var value = fnPredicate.call(this[i]);
+            var value = fnPredicate.call((void 0), this[i]);
             vals.push(value);
         }
     }

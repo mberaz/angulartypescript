@@ -56,13 +56,13 @@ class AppComponent
         //    () => { }
         //    );
 
-        var urls = [this.config.apiBaseUrl + "Todo", this.config.apiBaseUrl + "ItemTypes" ];
+        var urls = [this.config.apiBaseUrl + "Todo", this.config.apiBaseUrl + "ItemTypes"];
         Promise.all(urls.map(url =>
             fetch(url).then(resp => resp.json())
         )).then(results =>
         {
             this.loadTypes(results[0], results[1]);
-            });
+        });
 
     }
 
@@ -81,8 +81,8 @@ class AppComponent
             this.items.push(new ListItem(itemList[i].Id, itemList[i].Name, itemList[i].IsDone, new ItemType(type.id, type.name)));
         }
 
-        this.doneItems = this.items.where(function () { return this.isDone; });
-        this.unDoneItems = this.items.where(function () { return !this.isDone; });
+        this.doneItems = this.items.where((x) => { return x.isDone });
+        this.unDoneItems = this.items.where((x) => { return !x.isDone });
         this.remainingItemsCount = this.items.length - this.doneItems.length;
     }
 
@@ -92,13 +92,13 @@ class AppComponent
         term = term.toLowerCase();
         if (!term)
         {
-            this.doneItems = this.items.where(function () { return this.isDone; });
-            this.unDoneItems = this.items.where(function () { return !this.isDone; });
+            this.doneItems = this.items.where((x) => { return x.isDone });
+            this.unDoneItems = this.items.where((x) => { return !x.isDone });
         }
         else
         {
-            this.doneItems = this.items.where(function () { return this.isDone && this.name.toLowerCase().indexOf(term) > -1; });
-            this.unDoneItems = this.items.where(function () { return !this.isDone && this.name.toLowerCase().indexOf(term) > -1; });
+            this.doneItems = this.items.where((x) => { return x.isDone && x.name.toLowerCase().indexOf(term) > -1; });
+            this.unDoneItems = this.items.where((x)=>{ return !x.isDone && x.name.toLowerCase().indexOf(term) > -1; });
         }
 
     }
@@ -118,30 +118,29 @@ class AppComponent
 
         if (this.filerTypes.length > 0)
         {
-            var typeIds = this.filerTypes.select(function () { return this.id; });
-            this.doneItems = this.items.where(function () { return this.isDone && typeIds.indexOf(this.itemType.id) > -1; });
-            this.unDoneItems = this.items.where(function () { return !this.isDone && typeIds.indexOf(this.itemType.id) > -1; });
+            var typeIds = this.filerTypes.select(  (x)=> { return x.id; });
+            this.doneItems = this.items.where((x)=>{ return x.isDone && typeIds.indexOf(x.itemType.id) > -1; });
+            this.unDoneItems = this.items.where((x) => { return !x.isDone && typeIds.indexOf(x.itemType.id) > -1; });
         }
         else
         {
-            this.doneItems = this.items.where(function () { return this.isDone; });
-            this.unDoneItems = this.items.where(function () { return !this.isDone; });
+            this.doneItems = this.items.where((x) => { return x.isDone; });
+            this.unDoneItems = this.items.where((x) => { return !x.isDone; });
         }
     }
 
     getType(id)
     {
-
         if (this.types)
         {
-            return this.types.first(function () { return this.id == id });
+            return this.types.first((x)=> { return x.id == id });
         }
     }
     onChange(item: ListItem)
     {
         item.isDone = !item.isDone;
-        this.doneItems = this.items.where(function () { return this.isDone; });
-        this.unDoneItems = this.items.where(function () { return !this.isDone; });
+        this.doneItems = this.items.where((x) => { return x.isDone; });
+        this.unDoneItems = this.items.where((x) => { return !x.isDone; });
         this.remainingItemsCount = this.items.length - this.doneItems.length;
     }
 
@@ -155,7 +154,7 @@ class AppComponent
     {
         if (event.currentTarget.value)
         {
-            var type = this.types.first(function () { return this.id === parseInt(event.currentTarget.value) });
+            var type = this.types.first( (x)=> { return x.id === parseInt(event.currentTarget.value) });
             if (type)
             {
                 this.newItem.itemType = type;
@@ -248,7 +247,7 @@ class AppComponent
     openModal()
     {
         //function (res) { alert(res ? "ok" : "cancel");
-        this.modal.prompt("header", "message to me", null, function (res) { alert(res ); });
+        this.modal.prompt("header", "message to me", null, function (res) { alert(res); });
     }
 }
 

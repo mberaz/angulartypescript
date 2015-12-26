@@ -26,10 +26,10 @@ interface String
 //////
 
 Array.prototype.where = function (fnPredicate)
-{ 
-    // (items = self.items().where(function() {return this.ItemID() < currentItemID;}))
+{/// <summary>return all element from the array that match the filter </summary>
+    /// <param name="fnPredicate" type="function">search function delegete (items = self.items().where(function() {return this.ItemID() < currentItemID;}))</param>
     var len = this.length;
-    if (typeof fnPredicate !== "function")
+    if (typeof fnPredicate != "function")
     {
         throw new TypeError();
     }
@@ -38,11 +38,9 @@ Array.prototype.where = function (fnPredicate)
     {
         if (i in this)
         {
-            var match = fnPredicate.call(this[i]);
+            var match = fnPredicate.call((void 0),this[i]);
             if (match)
-            {
                 matches.push(this[i]);
-            }
         }
     }
 
@@ -60,7 +58,7 @@ Array.prototype.first = function (fnPredicate)
     {
         if (i in this)
         {
-            var match = fnPredicate.call(this[i]);
+            var match = fnPredicate.call((void 0),this[i]);
             if (match)
                 return this[i];
         }
@@ -80,7 +78,7 @@ Array.prototype.select = function (fnPredicate)
     {
         if (i in this)
         {
-            var value = fnPredicate.call(this[i]);
+            var value = fnPredicate.call((void 0),this[i]);
             vals.push(value);
 
         }

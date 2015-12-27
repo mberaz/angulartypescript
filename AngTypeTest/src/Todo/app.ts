@@ -63,7 +63,6 @@ class AppComponent
         {
             this.loadTypes(results[0], results[1]);
         });
-
     }
 
     loadTypes(itemList: any, typeList: any)
@@ -81,8 +80,7 @@ class AppComponent
             this.items.push(new ListItem(itemList[i].Id, itemList[i].Name, itemList[i].IsDone, new ItemType(type.id, type.name)));
         }
 
-        this.doneItems = this.items.where((x) => { return x.isDone });
-        this.unDoneItems = this.items.where((x) => { return !x.isDone });
+        this.setDeafultItems()
         this.remainingItemsCount = this.items.length - this.doneItems.length;
     }
 
@@ -92,8 +90,7 @@ class AppComponent
         term = term.toLowerCase();
         if (!term)
         {
-            this.doneItems = this.items.where((x) => { return x.isDone });
-            this.unDoneItems = this.items.where((x) => { return !x.isDone });
+            this.setDeafultItems()
         }
         else
         {
@@ -124,9 +121,14 @@ class AppComponent
         }
         else
         {
-            this.doneItems = this.items.where((x) => { return x.isDone; });
-            this.unDoneItems = this.items.where((x) => { return !x.isDone; });
+            this.setDeafultItems();
         }
+    }
+
+    setDeafultItems()
+    {
+        this.doneItems = this.items.where((x) => { return x.isDone; });
+        this.unDoneItems = this.items.where((x) => { return !x.isDone; });
     }
 
     getType(id)
@@ -139,8 +141,7 @@ class AppComponent
     onChange(item: ListItem)
     {
         item.isDone = !item.isDone;
-        this.doneItems = this.items.where((x) => { return x.isDone; });
-        this.unDoneItems = this.items.where((x) => { return !x.isDone; });
+        this.setDeafultItems()
         this.remainingItemsCount = this.items.length - this.doneItems.length;
     }
 
@@ -159,14 +160,12 @@ class AppComponent
             {
                 this.newItem.itemType = type;
             }
-
         }
 
     }
 
     SaveNewItem()
     {
-
         if (this.newItem.itemType.id === 0 || this.newItem.name.trim() === '')
         {
             alert("You must fill all of the data!");
@@ -188,7 +187,6 @@ class AppComponent
 
     saveCallback(data: any)
     {
-
         this.unDoneItems.push(new ListItem(data.Id, this.newItem.name, false, this.getType(data.Type)));
     }
 
@@ -199,7 +197,6 @@ class AppComponent
     onSelect(item: ListItem)
     {
         this.selectedItem = item;
-        // this.selectedTypeId = item.type;
     }
 
     setClass(item: ListItem)

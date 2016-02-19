@@ -17,6 +17,17 @@
 <!--class="modal-open"-->
 <div class="container theme-showcase" role="main" [ng-class]="modal.bodyClass">
 
+    <!--notes-->
+    <h2>notes</h2>
+
+    <ul class="notes">
+        <li *ng-for="#note of notes; #i=index" class="">
+            <note-item [note]="note"></note-item>
+        </li>
+    </ul>
+
+
+    <!-- end notes-->
     <div class="jumbotron">
         <!--  search-->
         <div>
@@ -97,7 +108,7 @@
 
     <div class="modal-dialog">
         <!--<div class="modal fade in" id="myModal" role="dialog" style="display: block;">-->
-        <div id="myModal" class="modal fade" role="dialog" [ng-class]="modal.modalClass"   [style.display]="modal.modelDisplay">
+        <div id="myModal" class="modal fade" role="dialog" [ng-class]="modal.modalClass" [style.display]="modal.modelDisplay">
             <div class="modal-dialog">
 
                 <!-- Modal content-->
@@ -114,8 +125,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" [style.display]="modal.cancelButtonDisplay" (click)="modal.cancelModal()" >Cancel</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal"  (click)="modal.hideModal()">OK</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" [style.display]="modal.cancelButtonDisplay" (click)="modal.cancelModal()">Cancel</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.hideModal()">OK</button>
                     </div>
                 </div>
 
@@ -125,5 +136,7 @@
         <div class="modal-backdrop fade in" [style.display]="modal.backDropDisplay"></div>
         <!--END Modal -->
     </div>
+
+
 </div>
-    <!--END main-->
+<!--END main-->

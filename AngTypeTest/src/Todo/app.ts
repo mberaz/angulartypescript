@@ -2,21 +2,21 @@
 /// <reference path="listitem.ts" />
 /// <reference path="common.ts" />
 /// <reference path="config.ts" />
-
+/// <reference path="note.ts" />
 
 import { bootstrap, Component, FORM_DIRECTIVES, CORE_DIRECTIVES} from "angular2/angular2";
 import {Http, HTTP_BINDINGS, Headers} from "angular2/http";
+import {NoteComponent} from './note.component'
 
 
 @Component({
     selector: "my-app",
     templateUrl: "/src/views/ListApp.html",
-    directives: [FORM_DIRECTIVES, CORE_DIRECTIVES],
+    directives: [NoteComponent, FORM_DIRECTIVES, CORE_DIRECTIVES],
 
 })
 
-class AppComponent
-{
+class AppComponent {
     public title = "Michaels TODO app";
     public navBarLInkText = "a random link";
     public selectedItem: ListItem;
@@ -33,13 +33,13 @@ class AppComponent
     public filerTypes = new Array<ItemType>();
     public selectedType: ItemType;
     public modal: ModelOpener;
-
+    public note: Note;
+    public notes = new Array<Note>();
 
     public searchTerm: string;
 
 
-    constructor(http: Http)
-    {
+    constructor(http: Http) {
         this.config = new Config();
         this.http = http;
         this.headers = new Headers();
@@ -47,6 +47,10 @@ class AppComponent
         this.addingNew = false;
         this.searchTerm = "";
         this.modal = new ModelOpener();
+
+        //var notes: Note[] = [new Note(1,"5","red")];
+
+        //this.note = notes[0] ;
 
         //this.http.get(this.config.apiBaseUrl + "Todo")
         //    .map(res=> res.json())
@@ -56,26 +60,38 @@ class AppComponent
         //    () => { }
         //    );
 
+
+        this.http.get(this.config.apiBaseUrl + "Note")
+            .map(res=> res.json())
+            .subscribe(
+            data=> this.loadNotes(data),
+            err=> console.log(err),
+            () => { }
+            );
+
         var urls = [this.config.apiBaseUrl + "Todo", this.config.apiBaseUrl + "ItemTypes"];
         Promise.all(urls.map(url =>
             fetch(url).then(resp => resp.json())
-        )).then(results =>
-        {
+        )).then(results => {
             this.loadTypes(results[0], results[1]);
         });
     }
 
-    loadTypes(itemList: any, typeList: any)
-    {
-        for (var i = 0; i < typeList.length; i++)
-        {
+
+    loadNotes = function (data: any) {
+        for (var i = 0; i < data.length; i++) {
+            this.notes.push(new Note(data[i].Id, data[i].Text, data[i].Color));
+        }      
+    }
+
+    loadTypes(itemList: any, typeList: any) {
+        for (var i = 0; i < typeList.length; i++) {
             this.types.push(new ItemType(typeList[i].Id, typeList[i].Name));
         }
 
         this.selectedType = this.types[0];
 
-        for (var i = 0; i < itemList.length; i++)
-        {
+        for (var i = 0; i < itemList.length; i++) {
             var type = this.getType(itemList[i].Type);
             this.items.push(new ListItem(itemList[i].Id, itemList[i].Name, itemList[i].IsDone, new ItemType(type.id, type.name)));
         }
@@ -84,90 +100,72 @@ class AppComponent
         this.remainingItemsCount = this.items.length - this.doneItems.length;
     }
 
-    search(term: string)
-    {
+    search(term: string) {
 
         term = term.toLowerCase();
-        if (!term)
-        {
+        if (!term) {
             this.setDeafultItems()
         }
-        else
-        {
+        else {
             this.doneItems = this.items.where((x) => { return x.isDone && x.name.toLowerCase().indexOf(term) > -1; });
-            this.unDoneItems = this.items.where((x)=>{ return !x.isDone && x.name.toLowerCase().indexOf(term) > -1; });
+            this.unDoneItems = this.items.where((x) => { return !x.isDone && x.name.toLowerCase().indexOf(term) > -1; });
         }
 
     }
 
-    toggleTypeFilter(type: ItemType)
-    {
+    toggleTypeFilter(type: ItemType) {
         var index = this.filerTypes.indexOf(type);
 
-        if (index === -1)
-        {//add to array
+        if (index === -1) {//add to array
             this.filerTypes.push(type);
         }
-        else
-        {//remove from array
+        else {//remove from array
             this.filerTypes = this.filerTypes.slice(index, 0);
         }
 
-        if (this.filerTypes.length > 0)
-        {
-            var typeIds = this.filerTypes.select(  (x)=> { return x.id; });
-            this.doneItems = this.items.where((x)=>{ return x.isDone && typeIds.indexOf(x.itemType.id) > -1; });
+        if (this.filerTypes.length > 0) {
+            var typeIds = this.filerTypes.select((x) => { return x.id; });
+            this.doneItems = this.items.where((x) => { return x.isDone && typeIds.indexOf(x.itemType.id) > -1; });
             this.unDoneItems = this.items.where((x) => { return !x.isDone && typeIds.indexOf(x.itemType.id) > -1; });
         }
-        else
-        {
+        else {
             this.setDeafultItems();
         }
     }
 
-    setDeafultItems()
-    {
+    setDeafultItems() {
         this.doneItems = this.items.where((x) => { return x.isDone; });
         this.unDoneItems = this.items.where((x) => { return !x.isDone; });
     }
 
-    getType(id)
-    {
-        if (this.types)
-        {
-            return this.types.first((x)=> { return x.id == id });
+    getType(id) {
+        if (this.types) {
+            return this.types.first((x) => { return x.id == id });
         }
     }
-    onChange(item: ListItem)
-    {
+    onChange(item: ListItem) {
         item.isDone = !item.isDone;
         this.setDeafultItems()
         this.remainingItemsCount = this.items.length - this.doneItems.length;
     }
 
-    addItem(event: any)
-    {
+    addItem(event: any) {
         this.addingNew = true;
         this.newItem = ListItem.CreateEmptyListItem();
     }
 
-    newItemTypeChange(event: any)
-    {
-        if (event.currentTarget.value)
-        {
-            var type = this.types.first( (x)=> { return x.id === parseInt(event.currentTarget.value) });
-            if (type)
-            {
+    newItemTypeChange(event: any) {
+        if (event.currentTarget.value) {
+            var type = this.types.first((x) => { return x.id === parseInt(event.currentTarget.value) });
+            if (type) {
                 this.newItem.itemType = type;
             }
         }
 
     }
 
-    SaveNewItem()
-    {
-        if (this.newItem.itemType.id === 0 || this.newItem.name.trim() === '')
-        {
+    SaveNewItem() {
+        if (this.newItem.itemType.id === 0 || this.newItem.name.trim() === '') {
             alert("You must fill all of the data!");
             return;
         }
@@ -185,29 +183,23 @@ class AppComponent
             );
     }
 
-    saveCallback(data: any)
-    {
+    saveCallback(data: any) {
         this.unDoneItems.push(new ListItem(data.Id, this.newItem.name, false, this.getType(data.Type)));
     }
 
-    cancel()
-    {
+    cancel() {
         this.addingNew = false;
     }
-    onSelect(item: ListItem)
-    {
+    onSelect(item: ListItem) {
         this.selectedItem = item;
     }
 
-    setClass(item: ListItem)
-    {
+    setClass(item: ListItem) {
         return item.isDone ? "label-success" : "label-info";
     }
 
-    changeSelectedItemType(event: any)
-    {
-        if (!event.currentTarget.value)
-        {
+    changeSelectedItemType(event: any) {
+        if (!event.currentTarget.value) {
             return;
         }
 
@@ -216,14 +208,12 @@ class AppComponent
     }
 
 
-    getSelectedClass(item: ListItem)
-    {
+    getSelectedClass(item: ListItem) {
         return { "selected": item === this.selectedItem };
     }
 
 
-    updateName(item: ListItem)
-    {
+    updateName(item: ListItem) {
         var data = JSON.stringify(this.selectedItem);
         this.http.put(this.config.apiBaseUrl + "Todo", data, {
             headers: this.headers
@@ -236,13 +226,11 @@ class AppComponent
             );
     }
 
-    showAlert(data: any)
-    {
+    showAlert(data: any) {
         alert(data);
     }
 
-    openModal()
-    {
+    openModal() {
         //function (res) { alert(res ? "ok" : "cancel");
         this.modal.prompt("header", "message to me", null, function (res) { alert(res); });
     }
